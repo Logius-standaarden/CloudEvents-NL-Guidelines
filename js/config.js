@@ -2,32 +2,43 @@ const documentConfig = {
     //voor specStatus mogelijkheden zie https://github.com/Logius-standaarden/respec/wiki/specStatus
     specStatus: "WV",
     //voor specType mogelijkheden zie https://github.com/Logius-standaarden/respec/wiki/specType
+
     specType: "HR",
-    pubDomain: "dk",
-    shortName: "template",
+    pubDomain: "notificatieservices",
+    shortname: "guidelines",
     publishDate: "2022-06-24",
     publishVersion: "0.0.1",
-    title: "titleText",
+    title: "Guidelines for NL-GOV profile CloudEvents",
     // previousPublishVersion: "(none)",
     //  previousPublishDate: "(none)",
     //  previousMaturity: "WV",
-    editors:
-        [
-            {
-                name: "Logius Standaarden",
-                company: "Logius",
-                companyURL: "https://github.com/Logius-standaarden",
-            }
-        ],
-    authors:
-        [
-            {
-                name: "Logius Standaarden",
-                company: "Logius",
-                companyURL: "https://github.com/Logius-standaarden",
-            }
-        ],
-    github: "https://github.com/Logius-standaarden/API-Design-Rules",
+    editors: [
+      {
+        name: "Gershon Jansen",
+        company: "VNG Realisatie",
+        companyURL: "https://www.vngrealisatie.nl/",
+      },
+      {
+        name: "Ad Gerrits",
+        company: "VNG Realisatie",
+        companyURL: "https://www.vngrealisatie.nl/",
+      },
+      {
+        name: "Edwin Wisse",
+        url: "https://logius.nl/standaarden",
+        company: "Logius",
+      },
+    ],
+    authors: [
+      {
+        name: "Werkgroep Berichtenstandaard",
+        company: "Project Notificatieservices",
+      }
+    ],
+
+    subtitle: "Project Notificatieservices",
+
+    github: "https://github.com/Logius-standaarden/CloudEvents-NL-Guidelines",
 
 
     // Controls if linked "§" section markers are added to a document
