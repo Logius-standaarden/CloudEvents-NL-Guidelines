@@ -51,4 +51,12 @@ const documentConfig = {
     // if nl_markdownEmbedImageInFigure is set to true images in markdown generated content will be surrounded with <figures> element
     // so that figures can be linked are be a part of table of figures
     nl_markdownEmbedImageInFigure: true,
+	
+	// Create PDF and link to file in header:
+    alternateFormats: [
+        {
+            label: "pdf",
+            uri: "CloudEvents-NL-Guidelines.pdf",
+        },
+    ],
 }
