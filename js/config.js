@@ -7,7 +7,7 @@ var respecConfig = {
     pubDomain: "notificatieservices",
     shortname: "guidelines",
     publishDate: "2022-06-24",
-    publishVersion: "0.0.1",
+    publishVersion: "0.3",
     title: "Guidelines for NL-GOV profile CloudEvents",
     // previousPublishVersion: "(none)",
     //  previousPublishDate: "(none)",
