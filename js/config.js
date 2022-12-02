@@ -5,7 +5,7 @@ var respecConfig = {
 
     specType: "HR",
     pubDomain: "notificatieservices",
-    shortname: "guidelines",
+    shortName: "guidelines",
     publishDate: "2022-06-24",
     publishVersion: "0.3",
     title: "Guidelines for NL-GOV profile CloudEvents",
