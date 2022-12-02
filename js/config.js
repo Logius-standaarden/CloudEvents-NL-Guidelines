@@ -28,7 +28,7 @@ var respecConfig = {
   pubDomain: "notificatieservices",
   publishDate: "2022-06-24",
   publishVersion: "0.3",
-  shortname: "guidelines",
+  shortName: "guidelines",
   specStatus: "WV",
   specType: "HR",
   subtitle: "Project Notificatieservices",
