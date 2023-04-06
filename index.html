@@ -10,10 +10,7 @@
   <script class="remove" src="js/config.js">
   </script>
   <script>
-   respecConfig = {...organisationConfig, ...respecConfig}; if (respecConfig.specStatus.toUpperCase() == "WV") {respecConfig.thisVersion = respecConfig.edDraftURI;}
-  </script>
-  <script class="remove">
-   respecConfig = {...respecConfig, ...organisationConfig}
+   respecConfig = {...organisationConfig, ...respecConfig};
   </script>
   <script>
    document.title = respecConfig.title
@@ -30,13 +27,10 @@
   </section>
   <section id="sotd">
   </section>
-  <!-- Wordt automatisch gevuld -->
   <section data-include="NL-GOV-Guideline-for-CloudEvents-HTTP.md" data-include-format="markdown">
   </section>
-  --&gt;
   <section data-include="NL-GOV-Guideline-for-CloudEvents-JSON.md" data-include-format="markdown">
   </section>
-  --&gt;
   <section data-include="NL-GOV-Guideline-for-CloudEvents-Webhook.md" data-include-format="markdown">
   </section>
   <!-- Hieronder optionele secties. Worden automatisch gevuld -->
