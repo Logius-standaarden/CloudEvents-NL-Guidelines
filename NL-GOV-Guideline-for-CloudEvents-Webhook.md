@@ -11,27 +11,28 @@ Similar to what happened in the 'NL GOV profile for the CloudEvents' specificati
 ## Summary with points for attention 
 
 The 'HTTP 1.1 Web Hooks for Event Delivery' specification prescribes rules constraining the use and handling of specific HTTP methods and headers and defines:
-1. a HTTP method by how notifications are delivered by the sender
+1. an HTTP method by how notifications are delivered by the sender
 2. an authorization model for event delivery to protect the delivery target
 3. a registration handshake that protects the sender from being abused for flooding arbitrary HTTP sites with requests.
 For each of the mechanisms it is described which agreements apply to both sender and receiver.
-The specification 
+
+## The specification 
 
 ### Delivering notifications
 
-- A delivery request MUST use a HTTP POST request via HTTPS.
+- A delivery request MUST use an HTTP POST request via HTTPS.
 - A delivery response MUST have the appropriate status code:
-    - 200 OK of 200 Created if delivery had been accepted and processed and response carries a payload
-    - 201 Created of 204 No Content when accepted and processed but carries no payload 
-    - 202 Accepted if accepted but not yet processed or processing status is unknown
-    - 410 Gone if delivery target has been retired
-    - 429 Too Many Requests when exceeding a request rate limit and MUST include the Retry-After header.
-    - 415 Unsupported Media Type wehen notification format is not understood.
-    - other error status codes apply as specified in [RFC7231](https://tools.ietf.org/html/rfc7231).
+    - `200 OK` or `200 Created` if delivery had been accepted and processed and response carries a payload
+    - `201 Created` or `204 No Content` when accepted and processed but carries no payload 
+    - `202 Accepted` if accepted but not yet processed or processing status is unknown
+    - `410 Gone` if delivery target has been retired
+    - `429 Too Many Requests` when exceeding a request rate limit and MUST include the Retry-After header.
+    - `415 Unsupported Media Type` when notification format is not understood.
+    - other error status codes apply as specified in [[RFC7231]].
 
 ### Authorization
 
-The delivery request MUST use one of the following two methods (both of which lean on the OAuth 2.0 Bearer Token [RFC6750](https://tools.ietf.org/html/rfc6750) model):
+The delivery request MUST use one of the following two methods (both of which lean on [[[RFC6750]]] model):
 -  The access token is sent in the Authorization request header field; for [OAuth 2.0 Bearer](https://tools.ietf.org/html/rfc6750#section-2.1) tokens, the "Bearer" scheme MUST be used.
 -  The access token is added to the HTTP Request URI Query component as described in [URI Query Parameter](https://github.com/cloudevents/spec/blob/v1.0.1/http-webhook.md#32-uri-query-parameter). 
 
@@ -45,7 +46,7 @@ It must be prevented that notifications are sent to recipients who have not requ
     - WebHook-Request-Origin (required):  a DNS expression that identifies the sending system
     - WebHook-Request-Callback (optional): a callback URL that allows the delivery target to grant send permission asynchronously, via a simple HTTPS callback.
     -  WebHook-Request-Rate (optional): a positive integer number that expresses the request rate in "requests per minute"
-- The _validation respons_ MUST be sent if the delivery target does allow delivery of events with header fields:
+- The _validation response_ MUST be sent if the delivery target does allow delivery of events with header fields:
     - WebHook-Allowed-Origin (required): MUST either be the origin name supplied in the WebHook-Request-Origin header, or a singular asterisk character ('*'), indicating that the delivery target supports notifications from all origins.
     - WebHook-Allowed-Rate (depends): MUST be returned if the request contained the WebHook-Request-Rate, otherwise it SHOULD be returned; an integer number expresses the permitted request rate in "requests per minute" or asterisk when there is no rate limitation.
 
@@ -105,7 +106,3 @@ Delivery response:
 ``` 
 HTTP/1.1 204 No Content
 ```
-
-## Normative References
-
-- [HTTP 1.1 Web Hooks for Event Delivery - Version 1.0.1](https://github.com/cloudevents/spec/blob/v1.0.1/http-webhook.md)
