@@ -21,12 +21,12 @@ The specification
 
 - A delivery request MUST use a HTTP POST request via HTTPS.
 - A delivery response MUST have the appropriate status code:
-    - 200 OK of 200 Created if delivery had been accepted and processed and response carries a payload
-    - 201 Created of 204 No Content when accepted and processed but carries no payload 
-    - 202 Accepted if accepted but not yet processed or processing status is unknown
-    - 410 Gone if delivery target has been retired
-    - 429 Too Many Requests when exceeding a request rate limit and MUST include the Retry-After header.
-    - 415 Unsupported Media Type wehen notification format is not understood.
+    - `200 OK` or `200 Created` if delivery had been accepted and processed and response carries a payload
+    - `201` Created or `204 No Content` when accepted and processed but carries no payload 
+    - `202 Accepted` if accepted but not yet processed or processing status is unknown
+    - `410 Gone` if delivery target has been retired
+    - `429 Too Many Requests` when exceeding a request rate limit and MUST include the Retry-After header.
+    - `415 Unsupported Media Type` when notification format is not understood.
     - other error status codes apply as specified in [RFC7231](https://tools.ietf.org/html/rfc7231).
 
 ### Authorization
@@ -45,14 +45,14 @@ It must be prevented that notifications are sent to recipients who have not requ
     - WebHook-Request-Origin (required):  a DNS expression that identifies the sending system
     - WebHook-Request-Callback (optional): a callback URL that allows the delivery target to grant send permission asynchronously, via a simple HTTPS callback.
     -  WebHook-Request-Rate (optional): a positive integer number that expresses the request rate in "requests per minute"
-- The _validation respons_ MUST be sent if the delivery target does allow delivery of events with header fields:
+- The _validation response_ MUST be sent if the delivery target does allow delivery of events with header fields:
     - WebHook-Allowed-Origin (required): MUST either be the origin name supplied in the WebHook-Request-Origin header, or a singular asterisk character ('*'), indicating that the delivery target supports notifications from all origins.
     - WebHook-Allowed-Rate (depends): MUST be returned if the request contained the WebHook-Request-Rate, otherwise it SHOULD be returned; an integer number expresses the permitted request rate in "requests per minute" or asterisk when there is no rate limitation.
 
 ## Recommendations
 - One SHOULD use the  [HTTP 1.1 Web Hooks for Event Delivery](https://github.com/cloudevents/spec/blob/v1.0.1/http-webhook.md). 
 - There are no agreements to deviate from the standard in any part.
-- As described in the specification usage of an access token added to the HTTP Request URI Query component has a number of security weaknesses and therefore SHOULD NOT be used unless it is impossible to sent an access token in the Authorization request header field.
+- As described in the specification usage of an access token added to the HTTP Request URI Query component has a number of security weaknesses and therefore SHOULD NOT be used unless it is impossible to send an access token in the Authorization request header field.
 -  The CloudEvents specification focuses on automated validation of intended notification applications. Within the context of the Dutch government, there can (also) be non-automated validation (e.g. by specifying endpoints in agreements between the organizations involved). In those cases it is not always necessary to perform an automated handshake before notifications may be sent.
 - An automated handshake as described can take place at different moments. If automated subscription to event notification is used:
     - one SHOULD perform a handshake as described in the specification immediately at registration time
