@@ -33,6 +33,5 @@ var respecConfig = {
   shortName: "guidelines",
   specStatus: "WV",
   specType: "HR",
-  subtitle: "Project Notificatieservices",
-  title: "Guidelines for NL-GOV profile CloudEvents"
+  subtitle: "Project Notificatieservices"
 };
