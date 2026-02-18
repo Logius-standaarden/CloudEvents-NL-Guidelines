@@ -159,3 +159,33 @@ Example:
 ```
 
 ------------------------------------------------------------------------
+
+## 6. Supported Operations
+
+### Retrieve Subscription (REQUIRED)
+
+    `GET /subscriptions/{id}`
+
+### Create Subscription (SHOULD)
+
+    `POST /subscriptions`
+
+Request body:
+
+  ``` json
+  {
+    "source": "...",
+    "types": ["..."],
+    "protocol": "http-pull"
+  }
+  ```
+    
+### Delete Subscription (SHOULD)
+
+    `DELETE /subscriptions/{id}`
+
+### Query Subscriptions (OPTIONAL)
+
+    `GET /subscriptions`
+
+------------------------------------------------------------------------
