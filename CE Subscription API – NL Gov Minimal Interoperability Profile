@@ -144,3 +144,18 @@ The event delivery interface:
 
 ------------------------------------------------------------------------
 
+## 5. Filtering
+
+This profile supports only the exact filter dialect.
+
+Example:
+
+``` json
+{
+  "exact": {
+    "type": "nl.overheid.zaak.statusgewijzigd.v1"
+  }
+}
+```
+
+------------------------------------------------------------------------
