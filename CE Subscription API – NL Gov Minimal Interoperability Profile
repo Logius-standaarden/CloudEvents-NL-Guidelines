@@ -189,3 +189,51 @@ Request body:
     `GET /subscriptions`
 
 ------------------------------------------------------------------------
+
+## 7. Event Consumption API
+
+### Poll for Events
+
+    `GET /subscriptions/{id}/events`
+
+Query Parameters:
+    - since
+      - Cursor or timestamp of last processed event
+    - limit
+      - Maximum number of events to return
+
+Example:
+    `GET /subscriptions/{id}/events?since=2026-02-18T10:15:00Z&limit=50`
+
+### Response
+
+MUST return:
+``` json
+[
+  { CloudEvent },
+  { CloudEvent }
+]
+```
+
+
+Content-Type:
+    `application/cloudevents+json`
+
+Each event MUST be a valid CloudEvents JSON.
+
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semantics
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
+
+------------------------------------------------------------------------
