@@ -88,12 +88,11 @@ registered consumers.
 
 This profile mandates: **Pull delivery via HTTPS.**
 
-#### Alternative Pull delivery 
+#### _Alternative Pull delivery_ (TODO: is dit handig voor implementors?)
 
-Implemented using native broker capabilities:
-
-- MQTT
-- AMQP 1.0
+_Implemented using native broker capabilities:_
+- _MQTT_
+- _AMQP 1.0_
 
 ------------------------------------------------------------------------
 
