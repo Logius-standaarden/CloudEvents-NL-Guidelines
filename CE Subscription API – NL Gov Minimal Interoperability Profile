@@ -128,11 +128,20 @@ The event delivery interface:
 }
 ```
 
-### Semantics
+### Semantic constraints
 
-#### id
-- Assigned by the subscription manager
-- Immutable
+- #### id
+  - Assigned by the subscription manager
+  - Immutable
+- #### source (OPTIONAL but RECOMMENDED)
+  - Scopes the subscription to a CloudEvents `source`.
+- #### types (OPTIONAL but RECOMMENDED)
+  - List of CloudEvents `type` values.
+- #### protocol
+  - MUST be: `http-pull`
+- #### endpoint
+  - The consumer’s polling endpoint.
+  - Example: `https://api.gemeente.nl/subscriptions/{id}/events`
 
 ------------------------------------------------------------------------
 
