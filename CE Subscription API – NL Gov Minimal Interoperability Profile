@@ -28,7 +28,7 @@ The profile:
 
 ## 2.Notations and Terminology (NL Government Context)
 
-### Notational Conventions
+### Notational Conventionsnummer>
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
@@ -78,7 +78,10 @@ registered consumers.
 
 ### 2.1 Roles
 
-  Role                   Interpretation in NL Gov
+  Role                   Interpretation in NL Govcer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
   ---------------------- -------------------------------------------------------
   Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
   Subscription Manager   Event broker or integration platform
@@ -87,6 +90,9 @@ registered consumers.
 ### 2.2 Delivery Style
 
 This profile mandates: **Pull delivery via HTTPS.**
+  Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
 
 #### _Alternative Pull delivery_ (TODO: is dit handig voor implementors?)
 
@@ -118,7 +124,10 @@ The event delivery interface:
 ## 4. Minimal Subscription Object
 
 ``` json
-{
+{Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
   "id": "string",
   "source": "uri-reference",
   "types": [ "string" ],
@@ -158,13 +167,26 @@ Example:
 }
 ```
 
+### Filtering considerations
+
+Because multiple valid identifiers may exist for the same entity, filtering solely on exact `source` string equality may lead to missed events.
+
+Subscribers SHOULD:
+
+- Filter on stable prefix patterns where possible
+- Agree contractually on canonical identifier usage
+- Avoid relying on implicit alias resolution
+
 ------------------------------------------------------------------------
 
 ## 6. Supported Operations
 
 ### Retrieve Subscription (REQUIRED)
 
-    `GET /subscriptions/{id}`
+    `GET /subscriptions/{id}`Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
 
 ### Create Subscription (SHOULD)
 
@@ -183,6 +205,20 @@ Request body:
 ### Delete Subscription (SHOULD)
 
     `DELETE /subscriptions/{id}`
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semantics
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
 
 ### Query Subscriptions (OPTIONAL)
 
@@ -208,6 +244,20 @@ Example:
 ### Response
 
 MUST return:
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semanticsthe colon character (":")
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
 ``` json
 [
   { CloudEvent },
