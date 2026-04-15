@@ -1,14 +1,11 @@
 import { loadRespecWithConfiguration } from "https://logius-standaarden.github.io/publicatie/respec/organisation-config.mjs";
 
 loadRespecWithConfiguration({
-  alternateFormats: [{
-    "label": "pdf",
-    "uri": "CloudEvents-NL-Guidelines.pdf"
-  }],
   authors: [{
-    "company": "Project Notificatieservices",
-    "name": "Werkgroep Berichtenstandaard"
-  }],
+      "company": "VNG Realisatie",
+      "companyURL": "https://www.vngrealisatie.nl/",
+      "name": "Ad Gerrits"
+    }],
   editors: [
     {
       "company": "VNG Realisatie",
@@ -23,7 +20,7 @@ loadRespecWithConfiguration({
     {
       "company": "Logius",
       "name": "Edwin Wisse",
-      "url": "https://logius.nl/standaarden"
+      "url": "https://www.logius.nl"
     }
   ],
   github: "https://github.com/Logius-standaarden/CloudEvents-NL-Guidelines",
