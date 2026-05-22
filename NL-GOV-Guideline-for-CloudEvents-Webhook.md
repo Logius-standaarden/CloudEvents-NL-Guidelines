@@ -1,6 +1,6 @@
 # Guideline for the use of the Webhook pattern for CloudEvents
 
-The CloudEvent-NL message format can be used when using different formats and protocols and patterns. In order to be able to use the NLgov profile for CloudEvents properly in practice, agreements must also be made when and in what way a certain format, protocol or pattern is used.
+The CloudEvents message format can be used when using different formats and protocols and patterns. In order to be able to use the NLgov profile for CloudEvents properly in practice, agreements must also be made when and in what way a certain format, protocol or pattern is used.
 
 The Serverless Working Group has described how the Webhook pattern can be used in a standardized way in combination with the CloudEvents message format: [HTTP 1.1 Web Hooks for Event Delivery](https://github.com/cloudevents/spec/blob/v1.0.1/http-webhook.md).
 
