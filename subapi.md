@@ -1,0 +1,289 @@
+# CloudEvents Subscription API -- NL Gov Minimal Interoperability Profile 
+
+## Abstract
+
+This specification defines mechanisms, including an API definition, for NL Gov
+CloudEvents event consumers to subscribe to events originating from event
+producers on behalf of event sources. The software entity handling these
+subscriptions and responsible for distributing events is abstractly referred to
+as a "subscription manager".
+
+## 1. Scope
+
+This profile defines the **minimum required functionality** to enable:
+
+-   event subscription between Dutch governmental organisations
+-   technology‑agnostic implementation
+-   fast Proof‑of‑Concept delivery
+
+The profile:
+
+-   **REUSES native subscription mechanisms** of messaging
+    infrastructure for event delivery
+-   uses a **simple HTTP/JSON management API**
+-   limits filtering and configuration to the **most interoperable
+    subset**
+
+------------------------------------------------------------------------
+
+## 2.Notations and Terminology (NL Government Context)
+
+### Notational Conventionsnummer>
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+interpreted as described in [RFC 2119](https://tools.ietf.org/html/rfc2119).
+
+### Terminology
+
+This specification uses the following terms:
+
+#### Source
+
+An event source is a logical entity in a system on behalf of which events are
+produced based on occurrences.
+
+#### Producer
+
+The entity producing the event. The event might reflect an occurrence on a
+source elsewhere in the system. The producer is the concrete entity that creates
+and sends the event related to an occurrence.
+
+#### Intermediary
+
+An "intermediary" (also referred to as middleware) receives an event for the
+purpose of forwarding it to the next receiver, which might be another
+intermediary or a consumer. A typical task for an intermediary is to route the
+event to receivers based on the information in the event context.
+
+#### Consumer
+
+An entity receiving and processing events. Consumers might receive events from
+producers directly or via intermediaries. A consumer might listen and wait for
+events to be delivered to it or it might actively solicit them from the producer
+or intermediary.
+
+#### Subscription
+
+A relationship established between a consumer and a producer or an intermediary.
+The subscription reflects the consumer's interest in receiving events and
+describes the method for how to deliver those events.
+
+#### Subscription Manager
+
+An entity, defined in this specification, that manages the lifecycle of a
+subscription on behalf of an event consumer and that distributes events to
+registered consumers.
+
+
+### 2.1 Roles
+
+  Role                   Interpretation in NL Govcer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
+  ---------------------- -------------------------------------------------------
+  Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
+### 2.2 Delivery Style
+
+This profile mandates: **Pull delivery via HTTPS.**
+  Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
+#### _Alternative Pull delivery_ (TODO: is dit handig voor implementors?)
+
+_Implemented using native broker capabilities:_
+- _MQTT_
+- _AMQP 1.0_
+
+------------------------------------------------------------------------
+
+## 3. Protocol Choices
+
+### 3.1 Management API
+
+The subscription management API:
+
+- MUST use **HTTP 1.1+**
+- MUST use **application/json**
+
+### 3.2 Event Delivery API
+
+The event delivery interface:
+
+- MUST use HTTPS
+- MUST return CloudEvents in JSON format
+- MUST support incremental consumption
+
+------------------------------------------------------------------------
+
+## 4. Minimal Subscription Object
+
+``` json
+{Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
+  "id": "string",
+  "source": "uri-reference",
+  "types": [ "string" ],
+  "protocol": "http-pull",
+  "endpoint": "uri"
+}
+```
+
+### Semantic constraints
+
+- #### id
+  - Assigned by the subscription manager
+  - Immutable
+- #### source (OPTIONAL but RECOMMENDED)
+  - Scopes the subscription to a CloudEvents `source`.
+- #### types (OPTIONAL but RECOMMENDED)
+  - List of CloudEvents `type` values.
+- #### protocol
+  - MUST be: `http-pull`
+- #### endpoint
+  - The consumer’s polling endpoint.
+  - Example: `https://api.gemeente.nl/subscriptions/{id}/events`
+
+------------------------------------------------------------------------
+
+## 5. Filtering
+
+This profile supports only the exact filter dialect.
+
+Example:
+
+``` json
+{
+  "exact": {
+    "type": "nl.overheid.zaak.statusgewijzigd.v1"
+  }
+}
+```
+
+### Filtering considerations
+
+Because multiple valid identifiers may exist for the same entity, filtering solely on exact `source` string equality may lead to missed events.
+
+Subscribers SHOULD:
+
+- Filter on stable prefix patterns where possible
+- Agree contractually on canonical identifier usage
+- Avoid relying on implicit alias resolution
+
+------------------------------------------------------------------------
+
+## 6. Supported Operations
+
+### Retrieve Subscription (REQUIRED)
+
+    `GET /subscriptions/{id}`Producer               Source system (e.g. BRP, BAG, Zaaksysteem)
+  Subscription Manager   Event broker or integration platform
+  Consumer               Receiving governmental organisation or shared service
+
+
+### Create Subscription (SHOULD)
+
+    `POST /subscriptions`
+
+Request body:
+
+  ``` json
+  {
+    "source": "...",
+    "types": ["..."],
+    "protocol": "http-pull"
+  }
+  ```
+    
+### Delete Subscription (SHOULD)
+
+    `DELETE /subscriptions/{id}`
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semantics
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
+
+### Query Subscriptions (OPTIONAL)
+
+    `GET /subscriptions`
+
+------------------------------------------------------------------------
+
+## 7. Event Consumption API
+
+### Poll for Events
+
+    `GET /subscriptions/{id}/events`
+
+Query Parameters:
+    - since
+      - Cursor or timestamp of last processed event
+    - limit
+      - Maximum number of events to return
+
+Example:
+    `GET /subscriptions/{id}/events?since=2026-02-18T10:15:00Z&limit=50`
+
+### Response
+
+MUST return:
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semanticsthe colon character (":")
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
+``` json
+[
+  { CloudEvent },
+  { CloudEvent }
+]
+```
+
+
+Content-Type:
+    `application/cloudevents+json`
+
+Each event MUST be a valid CloudEvents JSON.
+
+------------------------------------------------------------------------
+
+## 8. Reliability
+
+### Delivery Semantics
+
+This profile provides: **At-least-once delivery**
+
+Consumers MUST be idempotent.
+
+### Retention
+
+The Subscription Manager MUST retain events for a configurable period.
+
+
+------------------------------------------------------------------------
